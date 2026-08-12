@@ -23,8 +23,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Check out this repo, so that this workflow can access 
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       # Download the Databricks CLI
       # See this https://github.com/databricks/setup-cli
