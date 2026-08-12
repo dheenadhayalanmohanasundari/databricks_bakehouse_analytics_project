@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Check out this repo, so that this workflow can access ibackground: 
+      # Check out this repo, so that this workflow can access 
       - uses: actions/checkout@v4
 
       # Download the Databricks CLI
