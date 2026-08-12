@@ -13,8 +13,8 @@ on:
   push:
     branches:
       - main
-      paths:
-       - 'databricks_bakehouse_analytics_project/**'
+    paths:
+      - 'databricks_bakehouse_analytics_project/**'
        # "Only start this workflow if something inside this folder changes."
 
 jobs:
