@@ -1,40 +1,32 @@
-# This Workflow validates, deploys, and runs the specified bundle
-# within a production target named 'prod'
-name: 'Production deployement'
-
-# Ensure that only a single job or workflow using the same concurrency group
-# runs at the time
-concurrency: 1
-
-# Trigger this workflow whenevera pull request is pushed to the repo's
-# main branch.
+name: Production Deployment
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'databricks_bakehouse_analytics_project/**'
-       # "Only start this workflow if something inside this folder changes."
+      - "databricks_bakehouse_analytics_project/**"
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
 
 jobs:
   deploy:
-    name: 'Deploy bundle'
+    name: Deploy bundle
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Download the Databricks CLI
-      # See this https://github.com/databricks/setup-cli
-      - uses: databricks/setup-cli@main
+      - name: Install Databricks CLI
+        uses: databricks/setup-cli@main
 
-      # Deploy the bundle to the "prod" target as defined
-      # in the bundle's settings file
-      - run: databricks bundle deploy
-      working-directory: databricks_bakehouse_analytics_project
-      env:
-        DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
-        DATABRICKS_BUNDLE_ENV: prod
+      - name: Deploy bundle
+        run: databricks bundle deploy -t prod
+        working-directory: databricks_bakehouse_analytics_project
+        env:
+          DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
+          DATABRICKS_BUNDLE_ENV: prod
     
